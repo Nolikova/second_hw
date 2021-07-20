@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "61cd727c-ec02-48ea-91c3-1ea040b0323e",
+		"name": "homework4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\": \"/s34lfgbj/lika/jjd909/89971kjkWpqc16341234429697evny\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let salary = 10000",
+							"let salaryX2 = 20000",
+							"let salaryX29 = 29000",
+							"let salaryX4 = 40000",
+							"",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"    console.log('All is good! ', pm.response.code)",
+							"});",
+							"",
+							"pm.test(\"соответствие коэффициентам\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.start_qa_salary).to.eql(salary);",
+							"    pm.expect(jsonData.qa_salary_after_6_months).to.eql(salaryX2);",
+							"    pm.expect(jsonData.qa_salary_after_12_months).to.eql(salaryX29);",
+							"    pm.expect(jsonData.person.u_salary_1_5_year).to.eql(salaryX4)",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"age\" : \"27\",\n    \"salary\" : \"10000\",\n    \"name\" : \"sam\",\n    \"auth_token\" : \"{{token}}\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user_info",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let salary = 10000",
+							"let salaryX2 = '20000'",
+							"let salaryX3 = '30000'",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Content-Type header is application/json\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});",
+							"",
+							"pm.test(\"соответствие коэффициентам\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.salary[0]).to.eql(salary);",
+							"    pm.expect(jsonData.salary[1]).to.eql(salaryX2);",
+							"    pm.expect(jsonData.salary[2]).to.eql(salaryX3);  ",
+							"});",
+							"",
+							"pm.test(\"сравнение сумм\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(+jsonData.salary[2]).to.be.greaterThan(+jsonData.salary[1]);",
+							"    pm.expect(+jsonData.salary[2]).to.be.greaterThan(+jsonData.salary[0]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "10000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "sam",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/new_data",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"new_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test_pet_info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Content-Type header is application/json\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});",
+							"",
+							"let dfk = 6 * 0.012",
+							"let dsk = 6 * 2.5",
+							"",
+							"pm.test(\"соответствие коэффициентам\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.daily_food).to.eql(dfk);",
+							"    pm.expect(jsonData.daily_sleep).to.eql(dsk);",
+							"     ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "sam",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/test_pet_info",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"test_pet_info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_test_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Content-Type header is application/json\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});",
+							"",
+							"let name = pm.environment.get(\"name\");",
+							"pm.test(\"поля name = значению переменной name из окружения\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(name);",
+							"});",
+							"",
+							"let age = request.data.age;",
+							"pm.test(\"занчение поля age в ответе соответсвует отправленному в запросе значению поля age\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.age).to.eql(age);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "25",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						},
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/get_test_user",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"get_test_user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "currency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let minN = 1",
+							"let maxN = 510",
+							"function getRandomIntInclusive(min, max) {",
+							"  min = Math.ceil(min);",
+							"  max = Math.floor(max);",
+							"  return Math.floor(Math.random() * (max - min + 1)) + min; ",
+							"}",
+							"",
+							"var jsonData = pm.response.json();",
+							"let curid = jsonData[getRandomIntInclusive(minN, maxN)].Cur_ID",
+							"pm.environment.set(\"Random_Cur_ID\", curid);",
+							"pm.environment.set(\"allCurrs\", pm.response);",
+							"pm.environment.set(\"allCurrs_size\", jsonData.length);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/currency",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"currency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cur_byn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "curr_code",
+							"value": "{{Cur_ID}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/curr_byn",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"curr_byn"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "Cur_ID",
+			"value": ""
+		}
+	]
+}
